@@ -38,7 +38,8 @@ INSTALLED_APPS = [
 
     # апп
     'products',
-    'users'
+    'users',
+    'baskets',
 ]
 
 MIDDLEWARE = [
