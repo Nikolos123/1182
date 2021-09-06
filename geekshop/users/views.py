@@ -43,6 +43,15 @@ def register(request):
     return render(request, 'users/register.html', context)
 
 
+def profile(request):
+       # form = UserLoginForm()
+    context = {
+            'title': 'GeekShop - Профиле',
+            # 'form': form
+        }
+    return render(request, 'users/profile.html', context)
+
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('index'))
+
