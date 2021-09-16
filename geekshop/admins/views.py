@@ -45,22 +45,42 @@ class UserCreateView(CreateView):
         return super(UserCreateView, self).dispatch(request, *args, **kwargs)
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def admin_users_update(request,id):
-    users_select = User.objects.get(id=id)
-    if request.method == 'POST':
-        form = UserAdminProfileForm(data=request.POST, instance=users_select, files=request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('admins:admin_users'))
-    else:
-        form = UserAdminProfileForm(instance=users_select)
-    context = {
-        'title': 'GeekShop - Админ | Обновление пользователя',
-        'form': form,
-        'users_select':users_select
-    }
-    return render(request, 'admins/admin-users-update-delete.html', context)
+class UserUpdateView(UpdateView):
+    model = User
+    template_name = 'admins/admin-users-update-delete.html'
+    form_class = UserAdminProfileForm
+    success_url = reverse_lazy('admins:admin_users')
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(UserUpdateView, self).get_context_data(**kwargs)
+        context['title'] = 'Админка | Обновление пользователя'
+        return context
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def dispatch(self, request, *args, **kwargs):
+        return super(UserUpdateView, self).dispatch(request, *args, **kwargs)
+
+
+
+
+
+# @user_passes_test(lambda u: u.is_superuser)
+# def admin_users_update(request,id):
+#     users_select = User.objects.get(id=id)
+#     if request.method == 'POST':
+#         form = UserAdminProfileForm(data=request.POST, instance=users_select, files=request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect(reverse('admins:admin_users'))
+#     else:
+#         form = UserAdminProfileForm(instance=users_select)
+#     context = {
+#         'title': 'GeekShop - Админ | Обновление пользователя',
+#         'form': form,
+#         'users_select':users_select
+#     }
+#     return render(request, 'admins/admin-users-update-delete.html', context)
 
 @user_passes_test(lambda u: u.is_superuser)
 def admin_users_delete(request,id):
