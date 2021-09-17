@@ -52,11 +52,15 @@
                     </div>
 
                     </form>
-{#                    <div class="row">#}
-{#                        <div class="col-lg-12" style="margin-top: 33px;">#}
-{#                            <a class="btn btn-danger btn-block" href="{% url 'admins:admin_users_delete' users_select.id %}">Удалить</a>#}
-{#                        </div>#}
-{#                    </div>#}
+                    <form action="{% url 'admins:admin_users_delete' user.id %}" method="post">
+                        {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-12" style="margin-top: 33px;">
+                            <input class="btn btn-danger btn-block"  value="Удалить" type="submit">
+
+                        </div>
+                    </div>
+                    </form>
                 </div>
             </div>
         </main>
