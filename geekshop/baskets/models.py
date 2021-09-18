@@ -1,3 +1,5 @@
+import statistics
+
 from django.db import models
 
 from users.models import User
@@ -18,10 +20,12 @@ class Basket(models.Model):
     def sum(self):
         return self.quantity * self.product.price
 
-    def total_quantity(self):
-        baskets = Basket.objects.filter(user=self.user)
+    @staticmethod
+    def total_quantity(user):
+        baskets = Basket.objects.filter(user=user)
         return sum(basket.quantity for basket in baskets)
 
-    def total_sum(self):
-        baskets = Basket.objects.filter(user=self.user)
+    @staticmethod
+    def total_sum(user):
+        baskets = Basket.objects.filter(user=user)
         return sum(basket.sum() for basket in baskets)
