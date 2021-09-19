@@ -14,7 +14,6 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -131,3 +130,17 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 AUTH_USER_MODEL='users.User'
 LOGIN_URL = '/users/login/'
+
+
+
+EMAIL_HOST = 'localhost'
+EMAIL_HOST_USER = 'geekbrains'
+EMAIL_HOST_PASSWORD = '12345678'
+EMAIL_PORT = 25
+EMAIL_USE_SSL = False
+
+EMAIL_BACKEND ='django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = 'tmp/emails/'
+DOMAIN_NAME = 'http://localhost:8000'
+
+# EMAIL_HOST_USER ,EMAIL_HOST_PASSWORD = None,None

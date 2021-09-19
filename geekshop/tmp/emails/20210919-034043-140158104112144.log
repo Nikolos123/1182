@@ -1,0 +1,14 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: 
+ =?utf-8?b?0JTQu9GPINCw0LrRgtC40LLQsNGG0LjQuCDRg9GH0LXRgtC90L7QuSDQt9Cw0L8=?=
+ =?utf-8?b?0LjRgdC4IGRqYW5nbyDQv9GA0L7QudC00LjRgtC1INC/0L4g0YHRgdGL0LvQutC1?=
+From: geekbrains
+To: django@mail.ru
+Date: Sun, 19 Sep 2021 03:40:43 -0000
+Message-ID: <163202284395.137740.17193604492606014854@nik>
+
+Для подтверждения учетной записи django пройдите по ссылке: 
+http://localhost:8000/users/verify/django@mail.ru/a2c2552c60e0fe695c267f0b7ae79c62704541e7/
+-------------------------------------------------------------------------------
