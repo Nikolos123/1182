@@ -5,7 +5,7 @@ from django.contrib import auth, messages
 from django.urls import reverse, reverse_lazy
 from django.views.generic import FormView
 
-from .forms import UserLoginForm, UserRegisterForm, UserProfileForm
+from .forms import UserLoginForm, UserRegisterForm, UserProfileForm, UserProfileEditForm
 from baskets.models import Basket
 from django.contrib.auth.decorators import login_required
 
@@ -78,25 +78,18 @@ def register(request):
 def profile(request):
     if request.method == 'POST':
         form = UserProfileForm(data=request.POST, instance=request.user, files=request.FILES)
-        if form.is_valid():
-            form.save()
+        profile_form = UserProfileEditForm(data=request.POST,instance=request.user.userprofile)
+        if form.is_valid() and profile_form.is_valid():
+            profile_form.save()
             return HttpResponseRedirect(reverse('users:profile'))
 
     else:
-        # total_quantity = 0
-        # total_sum = 0
-        baskets = Basket.objects.filter(user=request.user)
-        # if baskets:
-        #     for basket in baskets:
-        #         total_quantity += basket.quantity
-        #         total_sum += basket.sum()
         form = UserProfileForm(instance=request.user)
+        profile_form = UserProfileEditForm(instance=request.user.userprofile)
     context = {
         'title': 'GeekShop - Профиле',
         'form': form,
-        'baskets': Basket.objects.filter(user=request.user),
-        # 'total_quantity': sum(basket.quantity for basket in baskets),
-        # 'total_sum': sum(basket.sum() for basket in baskets),
+        'profile_form':profile_form
     }
     return render(request, 'users/profile.html', context)
 
