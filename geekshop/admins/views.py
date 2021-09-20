@@ -7,6 +7,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 
 from admins.forms import UserAdminRegisterForm,UserAdminProfileForm
+from products.models import ProductsCategory, Product
 from users.models import User
 # Create your views here.
 
@@ -78,9 +79,22 @@ class UserDeleteView(DeleteView):
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
-# @user_passes_test(lambda u: u.is_superuser)
-# def admin_users_delete(request,id):
-#     user = User.objects.get(id=id)
-#     user.is_active = False
-#     user.save()
-#     return  HttpResponseRedirect(reverse('admins:admin_users'))
+
+
+#category
+
+
+
+class CategoryListView(ListView):
+    model = ProductsCategory
+    template_name = 'admins/admin-category-read.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CategoryListView, self).get_context_data(**kwargs)
+        context['title'] = 'Админка | Категории'
+        return context
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def dispatch(self, request, *args, **kwargs):
+        return super(CategoryListView, self).dispatch(request, *args, **kwargs)
+
