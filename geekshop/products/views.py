@@ -5,6 +5,8 @@ from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 import os
 import json
 
+from django.views.generic import DetailView
+
 from products.models import Product,ProductsCategory
 
 MODULE_DIR = os.path.dirname(__file__)
@@ -33,3 +35,19 @@ def products(request,id=None,page=1):
                }
     context['products'] = products_paginator
     return render(request, 'products/products.html', context)
+
+
+
+class ProductDetail(DetailView):
+    """
+    Контроллер вывода информации о продукте
+    """
+    model = Product
+    template_name = 'products/product_detail.html'
+    context_object_name = 'product'
+
+    def get_context_data(self, category_id=None, *args, **kwargs):
+        """Добавляем список категорий для вывода сайдбара с категориями на странице каталога"""
+        context = super().get_context_data()
+        context['categories'] = ProductsCategory.objects.all()
+        return context
