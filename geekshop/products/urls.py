@@ -25,4 +25,3 @@ urlpatterns = [
     path('category/<int:id>', products, name='category'),
     path('page/<int:page>', products, name='page'),
 ]
-
