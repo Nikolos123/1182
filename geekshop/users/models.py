@@ -41,6 +41,8 @@ class UserProfile(models.Model):
 
     gender = models.CharField(verbose_name='пол',choices=GENDER_CHOICES,blank=True,max_length=128)
 
+    langs = models.CharField(verbose_name='Язык', max_length=128, blank=True, default='EN')
+
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):

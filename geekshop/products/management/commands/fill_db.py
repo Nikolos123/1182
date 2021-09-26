@@ -36,4 +36,4 @@ class Command(BaseCommand):
             new_category = Product(**prod)
             new_category.save()
 
-        super_user = User.objects.create_superuser('nikolay','test@mail.ru','1')
+        # super_user = User.objects.create_superuser('nikolay','test@mail.ru','1')

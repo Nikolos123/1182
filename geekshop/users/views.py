@@ -10,7 +10,7 @@ from baskets.models import Basket
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-from .models import User
+from users.models import User
 
 
 def login(request):
@@ -80,7 +80,7 @@ def profile(request):
         form = UserProfileForm(data=request.POST, instance=request.user, files=request.FILES)
         profile_form = UserProfileEditForm(data=request.POST,instance=request.user.userprofile)
         if form.is_valid() and profile_form.is_valid():
-            profile_form.save()
+            form.save()
             return HttpResponseRedirect(reverse('users:profile'))
 
     else:
