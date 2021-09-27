@@ -5,7 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, User
 
 from django import forms
 
-from users.models import User
+from users.models import User, UserProfile
 
 
 class UserProfileForm(UserChangeForm):
@@ -16,10 +16,11 @@ class UserProfileForm(UserChangeForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control py-4', 'readonly': True}))
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4', 'readonly': True}))
     image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'custom-file-input'}), required=False)
+    age = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control py-4'}), required=False)
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'image')
+        fields = ('username', 'email', 'first_name', 'last_name', 'image','age')
         
 
     # def clean_image(self):
@@ -48,11 +49,11 @@ class UserRegisterForm(UserCreationForm):
     last_name = forms.CharField(widget=forms.TextInput())
     password1 = forms.CharField(widget=forms.PasswordInput())
     password2 = forms.CharField(widget=forms.PasswordInput())
-    age = forms.IntegerField(widget=forms.NumberInput(),required=False)
+    # age = forms.IntegerField(widget=forms.NumberInput(),required=False)
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2','age')
+        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
 
 
     def __init__(self, *args, **kwargs):
@@ -60,7 +61,7 @@ class UserRegisterForm(UserCreationForm):
         self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользователя'
         self.fields['email'].widget.attrs['placeholder'] = 'Введите адрес эл.почты'
         self.fields['first_name'].widget.attrs['placeholder'] = 'Введите имя'
-        self.fields['age'].widget.attrs['placeholder'] = 'Ваш возраст?'
+        # self.fields['age'].widget.attrs['placeholder'] = 'Ваш возраст?'
         self.fields['last_name'].widget.attrs['placeholder'] = 'Введите фамилию'
         self.fields['password1'].widget.attrs['placeholder'] = 'Введите пароль'
         self.fields['password2'].widget.attrs['placeholder'] = 'Подтвердите пароль'
@@ -74,3 +75,18 @@ class UserRegisterForm(UserCreationForm):
       user.activation_key = hashlib.sha1((user.email + salt).encode('utf8')).hexdigest()
       user.save()
       return user
+
+
+class UserProfileEditForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = ('tagline','gender','about_me')
+
+    def __init__(self,*args,**kwargs):
+        super(UserProfileEditForm, self).__init__(*args,**kwargs)
+        for field_name, field in self.fields.items():
+            if field_name != 'gender':
+                 field.widget.attrs['class'] = 'form-control py-4'
+            else:
+                field.widget.attrs['class'] = 'form-control'

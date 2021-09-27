@@ -44,21 +44,42 @@
                         <div class="col-lg-12">
                             <div class="custom-file">
                                 {{ form.image }}
-                                <label class="custom-file-label" for="{{ form.image.id_for_label}}">Выберите изображение</label>
+                                <label class="custom-file-label" for="{{ form.image.id_for_label }}">Выберите
+                                    изображение</label>
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-lg-6">
-                            <label class="small mb-1" for="{{ form.username.id_for_label}}">Имя пользователя</label>
+                            <label class="small mb-1" for="{{ form.username.id_for_label }}">Имя пользователя</label>
                             {{ form.username }}
                         </div>
                         <div class="col-lg-6">
-                            <label class="small mb-1" for="{{ form.email.id_for_label}}">Адрес электронной
+                            <label class="small mb-1" for="{{ form.email.id_for_label }}">Адрес электронной
                                 почты</label>
-                                {{ form.email }}
+                            {{ form.email }}
                         </div>
                     </div>
+
+                    <div class="form-row">
+                        <div class="col-lg-6">
+                            <label class="small mb-1" for="{{ form.age.id_for_label }}">Возраст</label>
+                            {{ form.age }}
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="small mb-1" for="{{ profile_form.gender.id_for_label }}">Пол
+                                </label>
+                            {{ profile_form.gender }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <label class="small mb-1" for="{{ profile_form.about_me.id_for_label }}">О себе
+                                </label>
+                            {{ profile_form.about_me }}
+                        </div>
+                    </div>
+
                     <div class="form-row">
                         <div class="col-lg-12" style="margin-top: 33px;">
                             <input class="btn btn-info btn-block" type="submit" value="Сохранить">
@@ -67,7 +88,7 @@
                 </form>
             </div>
             <div class="col-lg-5">
-              {% include 'baskets/baskets.html' %}
+                {% include 'baskets/baskets.html' %}
             </div>
         </div>
     </div>
