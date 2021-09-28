@@ -2,13 +2,13 @@
 {% load static %}
 
 
+
 {% block content %}
-<div class="px-4 py-4">
-   {#% include 'ordersapp/includes/inc_order_summary.html' %#}
+   {% include 'ordersapp/includes/inc_order_summary.html' %}
    <div class="basket_list">
        {% for item in object.orderitems.select_related %}
            <div class="basket_record">
-               <img style="height: 100px" src="{{ item.product.image.url  }}"
+               <img style="height: 150px" src="{{ item.product.image.url }}"
                     alt="{{ item.product.short_desc }}">
                <span class="category_name">
                    {{ item.product.category.name }}
@@ -26,6 +26,6 @@
            </div>
        {% endfor %}
    </div>
-   {#% include 'ordersapp/includes/inc_order_actions.html' %#}
-</div>
+   {% include 'ordersapp/includes/inc_order_actions.html' %}
+
 {% endblock %}

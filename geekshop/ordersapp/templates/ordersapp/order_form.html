@@ -1,10 +1,9 @@
-{% extends "users/base.html" %}
+{% extends "products/base.html" %}
 {% load static %}
 
 {% block content %}
-<div class="px-4 py-4">
-   {#% include 'ordersapp/includes/inc_order_summary.html' %#}
-   <div class="order_form w-50">
+   {% include 'ordersapp/includes/inc_order_summary.html' %}
+   <div class="order_form">
        <form action="" method="post">
            {% csrf_token %}
            {{ form.as_p }}
@@ -24,30 +23,23 @@
                    {% endif %}
                    <tr class="formset_row">
                        {% for field in form.visible_fields %}
-                           <td class="{% cycle 'td1' 'td2' 'td3' 'td4' %} order formset_td">
+                           <td class="{% cycle 'td1' 'td2' 'td3' %} order formset_td">
                                {% if forloop.first %}
                                    {% for hidden in form.hidden_fields %}
                                        {{ hidden }}
                                    {% endfor %}
                                {% endif %}
                                {{ field.errors.as_ul }}
-                               {% if field.name != 'price' %}
-                                   {{ field }}
-                               {% else %}
-                                   {% if field.value %}
-                                        <span class="orderitems-{{forloop.parentloop.counter0}}-price">
-                                            {{ field.value }}
-                                        </span> руб
-                                   {% endif %}
-                               {% endif %}
+                               {{ field }}
                            </td>
                        {% endfor %}
                    </tr>
                {% endfor %}
            </table>
-           <button type="submit" value="сохранить" class="btn btn-dark btn-round form-control last">сохранить</button>
-           {#% include 'ordersapp/includes/inc_order_actions.html' %#}
+           <button type="submit" value="сохранить" class="btn btn-default btn-round form-control last">сохранить</button>
+           {% include 'ordersapp/includes/inc_order_actions.html' %}
        </form>
    </div>
-</div>
+
 {% endblock %}
+
