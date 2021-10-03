@@ -20,8 +20,6 @@ class OrderList(ListView):
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user,is_active=True)
 
-
-
 class OrderCreate(CreateView):
     model = Order
     fields = []
@@ -72,7 +70,6 @@ class OrderDelete(DeleteView):
     model = Order
     success_url = reverse_lazy('orders:list')
 
-
 class OrderRead(DetailView):
     model = Order
     template_name = 'ordersapp/order_detail.html'
@@ -118,7 +115,6 @@ class OrderUpdate(UpdateView):
                 self.object.delete()
 
         return super().form_valid(form)
-
 
 def order_forming_complete(request,pk):
     order = get_object_or_404(Order, pk=pk)
