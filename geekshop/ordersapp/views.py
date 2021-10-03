@@ -152,9 +152,24 @@ def product_quantity_update_delete(sender, instance, **kwargs):
     instance.product.quantity += instance.quantity
     instance.product.save()
 
+def payment_result(request):
+    # ik_co_id = 51237daa8f2a2d8413000000
+    # ik_inv_id = 339800573
+    # ik_inv_st = success
+    # ik_pm_no = 1
+    status = request.GET.get('ik_inv_st')
+    if status == 'success':
+        order_pk = request.GET.get('ik_pm_no')
+        order_item = Order.objects.get(pk=order_pk)
+        order_item.status = Order.PAID
+        order_item.save()
+    return  HttpResponseRedirect(reverse('orders:list'))
+
+
 def get_product_price(request, pk):
     if request.is_ajax():
         product = Product.objects.filter(pk=int(pk)).first()
         if product:
             return JsonResponse({'price': product.price})
         return JsonResponse({'price': 0})
+
