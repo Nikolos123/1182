@@ -21,7 +21,7 @@ from .views import (
     OrderRead,
     OrderUpdate,
     OrderDelete,
-forming_complete
+    forming_complete, get_product_price
     # order_forming_complete,
     # get_product_price,
 )
@@ -36,6 +36,7 @@ urlpatterns = [
     path('read/<int:pk>', OrderRead.as_view(),  name='read'),
     path('update/<int:pk>', OrderUpdate.as_view(), name='update'),
     path('delete/<int:pk>', OrderDelete.as_view(), name='delete'),
+    path('product/<int:pk>/price/', get_product_price, name="product_price"),
 
 ]
 
