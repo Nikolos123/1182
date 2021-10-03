@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+      <div class="px-4 py-4" style="margin-top: 50px">
     {% include 'ordersapp/includes/inc_order_summary.html' %}
     <div class="order_form">
         <form action="" method="post">
@@ -50,6 +51,6 @@
             {% include 'ordersapp/includes/inc_order_actions.html' %}
         </form>
     </div>
-
+</div>
 {% endblock %}
 
