@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
 from django.db import transaction
 from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404
@@ -47,11 +48,11 @@ class LoginListView(LoginView):
 #     return render(request, 'users/login.html', context)
 
 
-class RegisterListView(FormView):
+class RegisterListView(SuccessMessageMixin,FormView):
     model = User
     template_name = 'users/register.html'
     form_class = UserRegisterForm
-    # success_message = 'Вы успешно зарегистрировались!'
+    success_message = 'Вы успешно зарегистрировались!'
     success_url = reverse_lazy('auth:login')
 
     def get_context_data(self, **kwargs):
@@ -88,7 +89,7 @@ class RegisterListView(FormView):
                 user.activation_key_expires = None
                 user.is_active = True
                 user.save()
-                auth.login(request, user)
+                auth.login(request, user,backend='django.contrib.auth.backends.ModelBackend')
             return render(request, 'users/verification.html')
         except Exception as e:
             return HttpResponseRedirect(reverse('index'))
