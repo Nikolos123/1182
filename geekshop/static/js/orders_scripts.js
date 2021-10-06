@@ -70,9 +70,9 @@ window.onload = function () {
         orderSummaryUpdate(price_arr[orderitem_num], delta_quantity);
     }
     //
-    if (!order_total_quantity) {
-        orderSummaryRecalc();
-    }
+    // if (!order_total_quantity) {
+    //     orderSummaryRecalc();
+    // }
 
     function orderSummaryRecalc() {
         order_total_quantity = 0;
@@ -83,14 +83,14 @@ window.onload = function () {
             order_total_price += quantity_arr[i] * price_arr[i];
         }
         $('.order_total_quantity').html(order_total_quantity.toString());
-        $('.order_total_cost').html(Number(order_total_price.toFixed(2).toString()));
+        $('.order_total_cost').html(Number(order_total_price.toFixed(2).toString())+ ',00');
     }
 
     $('.order_form select').change(function () {
         var target = event.target;
         orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-product', ''));
         var orderitem_product_pk = target.options[target.selectedIndex].value;
-
+        console.log(orderitem_product_pk)
 
         if (orderitem_product_pk) {
             $.ajax({
@@ -101,13 +101,10 @@ window.onload = function () {
                         if (isNaN(quantity_arr[orderitem_num])) {
                             quantity_arr[orderitem_num] = 0;
                         }
-                        var price_html = '<span>' + data.price.toString().replace('.', ',') + '<span/> руб';
+                        var price_html = '<span class="orderitems-' + orderitem_num+'-price">' + data.price.toString().replace('.', ',') + '<span/> руб';
                         var current_tr = $('.order_form table').find('tr:eq(' + (orderitem_num + 1) + ')');
                         current_tr.find('td:eq(2)').html(price_html);
 
-                        if (isNaN(current_tr.find('input[type="number"]').val())) {
-                            current_tr.find('input[type="number"]').val(0);
-                        }
                         orderSummaryRecalc();
                     }
 
