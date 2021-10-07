@@ -21,6 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-k4w8&#m9!cl29j6ri=rk_*3ui&+z7l!k4o@&n#-#x7ii-7j-#-'
 from dotenv import load_dotenv
+
 load_dotenv(BASE_DIR / '.env')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -88,10 +89,19 @@ WSGI_APPLICATION = 'geekshop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'geekshop',
+        'USER': 'postgres',
     }
 }
 
@@ -140,7 +150,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-AUTH_USER_MODEL='users.User'
+AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/users/login/'
 
 DOMAIN_NAME = 'http://localhost:8000'
@@ -153,7 +163,7 @@ EMAIL_USE_SSL = False
 # EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 # EMAIL_FILE_PATH = 'tmp/emails/'
 
-EMAIL_HOST_USER ,EMAIL_HOST_PASSWORD = None,None
+EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
 # python -m smtpd -n -c DebuggingServer localhost:25
 LOGIN_ERROR_URL = '/'
 
@@ -161,7 +171,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.vk.VKOAuth2'
 )
-
 
 SOCIAL_AUTH_VK_OAUTH2_KEY = '7962116'
 SOCIAL_AUTH_VK_OAUTH2_SECRET = 'SAI1mUqOTkrztok4bO4w'
