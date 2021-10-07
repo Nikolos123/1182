@@ -3,7 +3,7 @@ from django.db import transaction
 from django.db.models.signals import pre_delete, pre_save
 from django.dispatch import receiver
 from django.forms import inlineformset_factory
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
@@ -13,6 +13,7 @@ from django.views.generic import ListView, UpdateView, DeleteView, DetailView, C
 from baskets.models import Basket
 from ordersapp.forms import OrderItemsForm
 from ordersapp.models import Order, OrderItem
+from products.models import Product
 
 
 class OrderList(ListView):
@@ -161,3 +162,11 @@ def payment_result(request):
         order_item.status = Order.PAID
         order_item.save()
     return HttpResponseRedirect(reverse('orders:list'))
+
+def get_product_price(request,pk):
+    if request.is_ajax():
+        product = Product.objects.filter(pk=pk).first()
+        if product:
+            return JsonResponse({'price':product.price})
+
+        return JsonResponse({'price': 0})
