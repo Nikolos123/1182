@@ -8,6 +8,7 @@ from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.urls import reverse_lazy, reverse
+from django.utils.functional import cached_property
 from django.views.generic import ListView, UpdateView, DeleteView, DetailView, CreateView
 
 from baskets.models import Basket
@@ -95,19 +96,28 @@ class OrderUpdate(UpdateView):
     fields = []
     success_url = reverse_lazy('orders:list')
 
+
+    def get_queryset(self):
+        return Order.objects.all().select_related()
+
+
     def get_context_data(self, **kwargs):
         context = super(OrderUpdate, self).get_context_data(**kwargs)
         context['title'] = 'GeekShop - Обновление заказ'
-        OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemsForm, extra=1)
+        # context['order'] = self.get_object().orderitems.select_related()
+        OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemsForm, extra=0)
 
         if self.request.POST:
+
             formset = OrderFormSet(self.request.POST, instance=self.object)
         else:
-            queryset = self.object.orderitems.select_related()
+            queryset = self.object.orderitems.select_related('product')
             formset = OrderFormSet(instance=self.object,queryset=queryset)
             for form in formset:
                 if form.instance.pk:
+
                     form.initial['price'] = form.instance.product.price
+        # formset = OrderFormSet(instance=self.object)
         context['orderitems'] = formset
         return context
 
