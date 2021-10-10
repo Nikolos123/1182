@@ -101,7 +101,7 @@ class OrderUpdate(UpdateView):
         OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemsForm, extra=1)
 
         if self.request.POST:
-            formset = OrderFormSet(self.request.POST, instance=self.object)
+            formset = OrderFormSet(self.request.POST, instance=self.object.select_related())
         else:
             queryset = self.object.orderitems.select_related()
             formset = OrderFormSet(instance=self.object,queryset=queryset)
