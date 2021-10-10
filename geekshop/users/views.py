@@ -3,6 +3,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse, reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import FormView
 
 from .forms import UserLoginForm, UserRegisterForm, UserProfileForm, UserProfileEditForm
@@ -12,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 from users.models import User
 
-
+@csrf_exempt
 def login(request):
     if request.method == 'POST':
         form = UserLoginForm(data=request.POST)
