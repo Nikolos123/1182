@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-k4w8&#m9!cl29j6ri=rk_*3ui&+z7l!k4o@&n#-#x7ii-7j-#-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 # from django.conf.global_settings import
 ALLOWED_HOSTS = ['*']
 
@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'social_django',
     'ordersapp',
     'debug_toolbar',
-    'template_profiler_panel'
+    'template_profiler_panel',
+    'django_extensions'
+
 ]
 
 MIDDLEWARE = [
