@@ -10,7 +10,7 @@ from django.http import JsonResponse
 @login_required
 def baskets_add(request, id):
     product = Product.objects.get(id=id)
-    baskets = Basket.objects.filter(user=request.user, product=product)
+    baskets = Basket.objects.filter(user=request.user, product=product).select_related()
     if not baskets.exists():
         Basket.objects.create(user=request.user, product=product, quantity=1)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -38,7 +38,7 @@ def basket_edit(request, id, quantity):
         else:
             basket.delete()
 
-        baskets = Basket.objects.filter(user=request.user)
+        baskets = Basket.objects.filter(user=request.user).select_related()
         context = {'baskets': baskets}
         result = render_to_string('baskets/baskets.html', context)
         return JsonResponse({'result': result})
