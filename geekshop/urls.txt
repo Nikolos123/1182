@@ -1,1 +1,1 @@
-http://194.58.120.130/users/login/ POST username=nikolay&password=1
+http://194.58.120.130/orders/update/2
