@@ -8,6 +8,7 @@ from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_
 from django.contrib import auth, messages
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import FormView, UpdateView
 
 from .forms import UserLoginForm, UserRegisterForm, UserProfileForm, UserProfileEditForm
@@ -131,7 +132,7 @@ class ProfileFormView(LoginRequiredMixin,UpdateView):
     def get_object(self,*args,**kwargs):
         return get_object_or_404(User, pk=self.request.user.pk)
 
-
+    # @csrf_exempt
     @transaction.atomic
     def post(self, request, *args, **kwargs):
         user = self.get_object()
