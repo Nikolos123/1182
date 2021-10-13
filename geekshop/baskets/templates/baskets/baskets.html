@@ -5,8 +5,8 @@
     {% if baskets %}
 
         <h4 class="mt-3 mb-3 d-flex justify-content-between align-items-center mb-3">
-{#            Корзина <span class="badge badge-secondary badge-pill">{{ baskets.0.total_quantity }}</span>#}
-            Корзина <span class="badge badge-secondary badge-pill">{{ variable|total_quantity:user }}</span>
+            Корзина <span class="badge badge-secondary badge-pill">{{ baskets.0.total_quantity }}</span>
+{#            Корзина <span class="badge badge-secondary badge-pill">{{ variable|total_quantity:user }}</span>#}
         </h4>
         <div class="card mb-3">
             {% for basket in baskets %}
@@ -35,8 +35,8 @@
         <div class="card mb-3">
             <div class="card-footer">
                 <p class="float-left">Итого</p>
-{#                <h4 class="float-right">{{ baskets.0.total_sum }} руб.</h4>#}
-                <h4 class="float-right">{{ variable|total_sum:user }} руб.</h4>
+                <h4 class="float-right">{{ baskets.0.total_sum }} руб.</h4>
+{#                <h4 class="float-right">{{ variable|total_sum:user }} руб.</h4>#}
             </div>
         </div>
         <button type="button" class="btn btn-success btn-lg float-right">Оформить</button>
