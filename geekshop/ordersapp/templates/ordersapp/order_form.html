@@ -15,7 +15,7 @@
                         <thead>
                         <tr>
                             {% for field in form.visible_fields %}
-                                <th class="{% cycle 'td1' 'td2' 'td3' %} order formset_td">
+                                <th class="{% cycle 'td1' 'td2' 'td3' 'td4' %} order formset_td">
                                     {{ field.label|capfirst }}
                                 </th>
                             {% endfor %}
@@ -24,7 +24,7 @@
                     {% endif %}
                     <tr class="formset_row">
                         {% for field in form.visible_fields %}
-                            <td class="{% cycle 'td1' 'td2' 'td3' %} order formset_td">
+                            <td class="{% cycle 'td1' 'td2' 'td3' 'td4' %} order formset_td">
                                 {% if forloop.first %}
                                     {% for hidden in form.hidden_fields %}
                                         {{ hidden }}
@@ -33,21 +33,18 @@
                                 {{ field.errors.as_ul }}
 
                                 {% if field.name != 'price' %}
-                                    {% if field.name == 'product5' %}
-                                        {% cache 3600 orderitemsform_product field.value %}
+                                    {% if field.name == 'product' %}
+                                        {% cache 3600 orderitemform_product field.value %}
                                             {{ field }}
                                         {% endcache %}
                                     {% else %}
                                         {{ field }}
                                     {% endif %}
                                 {% else %}
-                                    {% if  field.value %}
-                                        <span class="orderitems-{{ forloop.parentloop.counter0 }}-price">
-                                            {{ field.value }} руб </span>
+                                    {% if field.value %}
+                                        <span class="orderitems-{{ forloop.parentloop.counter0 }}-price">{{ field.value }}</span>
                                     {% endif %}
                                 {% endif %}
-
-
                             </td>
                         {% endfor %}
                     </tr>
