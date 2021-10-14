@@ -1,5 +1,6 @@
 {% extends "products/base.html" %}
 {% load static %}
+{% load cache %}
 
 {% block content %}
     {% include 'ordersapp/includes/inc_order_summary.html' %}
@@ -31,14 +32,19 @@
                                 {% endif %}
                                 {{ field.errors.as_ul }}
 
-                                {% if field.name == 'price' %}
-                                    {% if not field.value %}
+                                {% if field.name != 'price' %}
+                                    {% if field.name == 'product5' %}
+                                        {% cache 3600 orderitemsform_product field.value %}
+                                            {{ field }}
+                                        {% endcache %}
                                     {% else %}
-                                        <span class="orderitems-{{ forloop.parentloop.counter0 }}-price">
-                                            {{ field.value}} руб </span>
+                                        {{ field }}
                                     {% endif %}
                                 {% else %}
-                                    {{ field }}
+                                    {% if  field.value %}
+                                        <span class="orderitems-{{ forloop.parentloop.counter0 }}-price">
+                                            {{ field.value }} руб </span>
+                                    {% endif %}
                                 {% endif %}
 
 
