@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -29,6 +29,18 @@ def get_links_category():
         return links_category
     else:
         return ProductsCategory.objects.filter(is_active=True)
+
+def get_product(pk):
+    if settings.LOW_CACHE:
+        key = f'product{pk}'
+        product = cache.get(key)
+
+        if product is None:
+            product = get_object_or_404(Product,pk=pk)
+            cache.set(key, product)
+        return product
+    else:
+        return get_object_or_404(Product,pk=pk)
 
 
 def get_links_product():
@@ -76,8 +88,11 @@ class ProductDetail(DetailView):
     template_name = 'products/product_detail.html'
     context_object_name = 'product'
 
+
     def get_context_data(self, category_id=None, *args, **kwargs):
         """Добавляем список категорий для вывода сайдбара с категориями на странице каталога"""
         context = super().get_context_data()
+
+        context['product'] = get_product(self.kwargs.get('pk'))
         context['categories'] = ProductsCategory.objects.all()
         return context
