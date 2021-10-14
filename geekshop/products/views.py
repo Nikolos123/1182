@@ -64,7 +64,7 @@ def index(request):
 def products(request, id=None, page=1):
     products = Product.objects.filter(category_id=id).select_related(
         'category') if id != None else Product.objects.all().select_related('category')
-    products = get_links_product()
+    # products = get_links_product()
     paginator = Paginator(products, per_page=3)
     try:
         products_paginator = paginator.page(page)
@@ -74,7 +74,7 @@ def products(request, id=None, page=1):
         products_paginator = paginator.page(paginator.num_pages)
 
     context = {'title': 'Каталог',
-               'category': get_links_category(),
+               'category': ProductsCategory.objects.all(is_active=True),
                }
     context['products'] = products_paginator
     return render(request, 'products/products.html', context)
