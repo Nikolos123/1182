@@ -74,7 +74,7 @@ def products(request, id=None, page=1):
         products_paginator = paginator.page(paginator.num_pages)
 
     context = {'title': 'Каталог',
-               'category': ProductsCategory.objects.all(is_active=True),
+               'category': ProductsCategory.objects.filter(is_active=True),
                }
     context['products'] = products_paginator
     return render(request, 'products/products.html', context)
