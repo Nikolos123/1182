@@ -8,7 +8,7 @@ from django.core.cache import cache
 import os
 import json
 
-from django.views.decorators.cache import cache_page
+from django.views.decorators.cache import cache_page, never_cache
 from django.views.generic import DetailView
 
 from products.models import Product, ProductsCategory
@@ -60,7 +60,7 @@ def get_links_product():
 def index(request):
     context = {'title': 'GeekShop'}
     return render(request, 'products/index.html', context)
-
+@never_cache
 @cache_page(3600)
 def products(request, id=None, page=1):
     products = Product.objects.filter(category_id=id).select_related(
