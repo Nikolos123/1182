@@ -8,6 +8,7 @@ from django.core.cache import cache
 import os
 import json
 
+from django.views.decorators.cache import cache_page
 from django.views.generic import DetailView
 
 from products.models import Product, ProductsCategory
@@ -60,7 +61,7 @@ def index(request):
     context = {'title': 'GeekShop'}
     return render(request, 'products/index.html', context)
 
-
+@cache_page(3600)
 def products(request, id=None, page=1):
     products = Product.objects.filter(category_id=id).select_related(
         'category') if id != None else Product.objects.all().select_related('category')
