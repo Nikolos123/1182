@@ -9,7 +9,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table mr-1"></i>
-                        Категории
+                        Продукты
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -18,6 +18,9 @@
                                 <tr>
                                     <th>Наименование</th>
                                     <th>Описание</th>
+                                    <th>Категория</th>
+                                    <th>Цена</th>
+                                    <th>Количество</th>
                                     <th>Активный</th>
                                     <th>Удалить</th>
                                     <th>Изменить</th>
@@ -27,6 +30,9 @@
                                 <tr>
                                     <th>Наименование</th>
                                     <th>Описание</th>
+                                    <th>Категория</th>
+                                    <th>Цена</th>
+                                    <th>Количество</th>
                                     <th>Активный</th>
                                     <th>Удалить</th>
                                     <th>Изменить</th>
@@ -34,12 +40,16 @@
                                 </tfoot>
                                 <tbody>
 
-                                {% for category in object_list %}
+                                {% for product in object_list %}
                                     <tr>
-                                        <td>{{ category.name }}</td>
-                                        <td>{{ category.description }}</td>
+                                        <td>{{ product.name }}</td>
+                                        <td>{{ product.description }}</td>
+                                         <td>{{ product.category }}</td>
+                                         <td>{{ product.price }}</td>
+                                         <td>{{ product.quantity }}</td>
+
                                         <td class="text-center">
-                                            {% if category.is_active %}
+                                            {% if product.is_active %}
                                                 <i class="fas fa-check-circle"></i>
                                             {% else %}
 
@@ -47,13 +57,15 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                            <form action="{% url 'admins:admin_category_delete' category.id %}" method="post">
+                                            <form action="{#% url 'admins:admin_category_delete' category.id %#}"
+                                                  method="post">
                                                 {% csrf_token %}
                                                 <input class="btn btn-danger btn-block" type="submit" value="Удалить">
                                             </form>
                                         </td>
                                         <td>
-                                            <form action="{% url 'admins:admin_category_update' category.id %}">
+                                            <form action="{#% url 'admins:admin_category_update' category.id %#}"
+                                                  method="post">
                                                 {% csrf_token %}
                                                 <input class="btn btn-success btn-block" type="submit" value="Изменить">
                                             </form>

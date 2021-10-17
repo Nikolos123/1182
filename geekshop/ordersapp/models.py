@@ -66,3 +66,7 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f'Tекущий заказ {self.pk}'
+
+    @staticmethod
+    def get_item(pk):
+        return OrderItem.objects.get(pk=pk).quantity
