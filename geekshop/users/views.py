@@ -61,7 +61,7 @@ class RegisterListView(SuccessMessageMixin,FormView):
     template_name = 'users/register.html'
     form_class = UserRegisterForm
     success_message = 'Вы успешно зарегистрировались!'
-    success_url = reverse_lazy('auth:login')
+    success_url = reverse_lazy('users:login')
 
     def get_context_data(self, **kwargs):
         context = super(RegisterListView, self).get_context_data(**kwargs)
