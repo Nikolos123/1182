@@ -19,8 +19,8 @@ def baskets_add(request, id):
 
     else:
         baskets = baskets.first()
-        baskets.quantity += 1
-        # baskets.quantity = F('quantity')+1
+        # baskets.quantity += 1
+        baskets.quantity = F('quantity')+1
         baskets.save()
 
         update_queries = list(filter(lambda x: 'UPDATE' in x['sql'], connection.queries))
