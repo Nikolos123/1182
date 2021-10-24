@@ -1,6 +1,7 @@
 from django.db.models import F
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
+from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import user_passes_test
 from django.utils.decorators import method_decorator
@@ -110,13 +111,22 @@ class CategoryDeleteView(DeleteView):
     model = ProductsCategory
     template_name = 'admins/admin-category-update-delete.html'
     success_url = reverse_lazy('admins:admin_category')
-
+    def post(self, request, *args, **kwargs):
+        pass
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
         self.object.product_set.update(is_active=False)
         self.object.is_active = False
         self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
+
+        category = ProductsCategory.objects.all()
+        context = {'object_list': category}
+        result = render_to_string('admins/delete_category.html', context,request=request)
+        return JsonResponse({'result': result})
+
+
+
+        # return HttpResponseRedirect(self.get_success_url())
 
     @method_decorator(user_passes_test(lambda u: u.is_superuser))
     def dispatch(self, request, *args, **kwargs):

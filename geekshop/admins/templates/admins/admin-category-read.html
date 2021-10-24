@@ -12,57 +12,7 @@
                         Категории
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>Наименование</th>
-                                    <th>Описание</th>
-                                    <th>Активный</th>
-                                    <th>Удалить</th>
-                                    <th>Изменить</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>Наименование</th>
-                                    <th>Описание</th>
-                                    <th>Активный</th>
-                                    <th>Удалить</th>
-                                    <th>Изменить</th>
-                                </tr>
-                                </tfoot>
-                                <tbody>
-
-                                {% for category in object_list %}
-                                    <tr>
-                                        <td>{{ category.name }}</td>
-                                        <td>{{ category.description }}</td>
-                                        <td class="text-center">
-                                            {% if category.is_active %}
-                                                <i class="fas fa-check-circle"></i>
-                                            {% else %}
-
-                                                <i class="fas fa-times-circle"></i>
-                                            {% endif %}
-                                        </td>
-                                        <td>
-                                            <form action="{% url 'admins:admin_category_delete' category.id %}" method="post">
-                                                {% csrf_token %}
-                                                <input class="btn btn-danger btn-block" type="submit" value="Удалить">
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <form action="{% url 'admins:admin_category_update' category.id %}">
-                                                {% csrf_token %}
-                                                <input class="btn btn-success btn-block" type="submit" value="Изменить">
-                                            </form>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                      {% include 'admins/delete_category.html' %}
                     </div>
                     <div class="card-footer">
                         <a href="{% url 'admins:admin_users_create' %}">
