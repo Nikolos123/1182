@@ -9,6 +9,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
+
+     <style type="text/css">
+        .poster {
+            position: relative;
+            height: auto;
+            width: auto;
+        }
+
+        .descr {
+            display: none;
+            margin-left: 50px;
+            padding: 10px;
+            margin-top: 17px;
+            background: #f3f3f3;
+            height: 200px;
+            -moz-box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+            -webkit-box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .poster:hover .descr {
+            display: block;
+            position: absolute;
+            top: -150px;
+            z-index: 9999;
+            width: 208px;
+            height: auto;
+
+        }
+    </style>
     <title>{{ title}}</title>
     <link href="{% static 'css/auth-admin.css' %}" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"

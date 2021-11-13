@@ -12,6 +12,8 @@ class TestMainSmokeTest(TestCase):
     def setUp(self) -> None:
         category = ProductsCategory.objects.create(name='Test')
         Product.objects.create(category=category,name='product_test',price=100)
+        Product.objects.create(category=category, name='product_test1', price=50)
+
 
         self.client = Client()
 
@@ -24,8 +26,8 @@ class TestMainSmokeTest(TestCase):
         for product_item in Product.objects.all():
             response = self.client.get(f'/products/detail/{product_item.pk}/')
             self.assertEqual(response.status_code, self.status_code_success)
-
-        # 2 выполнения теста
+    #
+    #     # 2 выполнения теста
     def test_products_basket(self):
             response = self.client.get('/users/profile/')
             self.assertEqual(response.status_code, 302)

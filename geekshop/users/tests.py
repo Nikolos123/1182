@@ -35,7 +35,7 @@ class TestMainSmokeTest(TestCase):
         self.assertEqual(response.status_code,self.status_code_success)
 
         self.assertTrue(response.context['user'].is_anonymous)
-
+        #
         self.client.login(username=self.username,password=self.password)
         response = self.client.get('/users/login/')
         self.assertEqual(response.status_code, self.status_code_render)
@@ -43,15 +43,16 @@ class TestMainSmokeTest(TestCase):
     def test_register(self):
         response = self.client.post('/users/register/',data=self.new_user_data)
         self.assertEqual(response.status_code,self.status_code_render)
-
-
+    #
+    #
         new_user = User.objects.get(username=self.new_user_data['username'])
-        print(new_user)
-        #готовим ссылку
+        # print(new_user)
+    #     #готовим ссылку
         activation_url = f"{settings.DOMAIN_NAME}/users/verify/{self.new_user_data['email']}/{new_user.activation_key}/"
+        print(activation_url)
         response = self.client.get(activation_url)
         self.assertEqual(response.status_code, self.status_code_success)
-
+    #
         new_user.refresh_from_db()
         self.assertTrue(new_user.is_active)
 

@@ -42,11 +42,22 @@
 
                                 {% for product in object_list %}
                                     <tr>
-                                        <td>{{ product.name }}</td>
+
+                                        <td>
+                                            <div class="poster">
+                                                <a
+                                                        href="#"
+                                                        style="color: dodgerblue">{{ product.name }}</a>
+                                                <div class="descr"><img src="{{ product.image.url}}"
+                                                                        width="190" height="255"><br></div>
+                                            </div>
+
+                                        </td>
+{#                                        <td>{{ product.name }}</td>#}
                                         <td>{{ product.description }}</td>
-                                         <td>{{ product.category }}</td>
-                                         <td>{{ product.price }}</td>
-                                         <td>{{ product.quantity }}</td>
+                                        <td>{{ product.category }}</td>
+                                        <td>{{ product.price }}</td>
+                                        <td>{{ product.quantity }}</td>
 
                                         <td class="text-center">
                                             {% if product.is_active %}
